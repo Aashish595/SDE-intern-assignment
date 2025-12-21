@@ -13,14 +13,30 @@ export default function IssueCard({ issue }: { issue: Issue }) {
     await api(`/api/issues/${issue._id}`, { method: "DELETE" });
     location.reload();
   };
-  return (
-    <div className="bg-slate-800 p-4 rounded-xl mb-3">
-      <h3 className="font-semibold">{issue.title}</h3>
-      <p className="text-sm text-slate-400">{issue.type}</p>
 
-      <button onClick={del} className="text-red-400 text-sm mt-2">
-        Delete
-      </button>
+  return (
+    <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl mb-4">
+      <div className="flex justify-between items-start">
+        <div>
+          <h3 className="font-semibold text-lg">
+            {issue.title}
+          </h3>
+          <p className="text-sm text-slate-400">
+            {issue.type}
+          </p>
+        </div>
+
+        <button
+          onClick={del}
+          className="text-red-400 text-sm hover:underline"
+        >
+          Delete
+        </button>
+      </div>
+
+      <p className="text-slate-300 mt-2 text-sm">
+        {issue.description}
+      </p>
     </div>
   );
 }
