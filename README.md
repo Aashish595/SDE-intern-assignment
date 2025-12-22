@@ -1,276 +1,97 @@
-ApniSec – Full-Stack Cybersecurity Platform
-
-A production-ready Next.js application with custom authentication, issue management, rate limiting, and email integration.
-
-📌 Overview
-
-ApniSec is a full-stack cybersecurity service platform built using Next.js App Router and TypeScript, following enterprise-grade architecture principles.
-The application demonstrates real-world implementation of custom JWT authentication, rate-limited APIs, OOP-based backend design, email notifications, and a SEO-optimized marketing landing page.
-
-This project was designed as a professional SDE-level assignment, focusing on clean architecture, scalability, and production readiness.
-🚀 Features
-🔐 Authentication & Security
-
-Custom JWT-based authentication
-
-Secure HTTP-only cookies
-
-Protected routes using middleware
-
-Logout with cookie invalidation
-
-Rate-limited authentication APIs
-
-Fully typed auth flow (no any usage)
-
-📧 Email Integration
-
-Email service powered by Resend
-
-Used for onboarding / notifications
-
-Configurable sender and branding
-
-🧠 Backend Architecture (OOP)
-
-Entire backend follows Object-Oriented Programming
-
-Business logic implemented via classes
-
-Clear separation of:
-
-Controllers
-
-Services
-
-Models
-
-Utilities
-
-No functional business logic
-
-Strong typing across all layers
-
-🛡️ Issue Management System
-
-Create, read, update, delete issues
-
-Supported issue types:
-
-Cloud Security
-
-Red Team Assessment
-
-VAPT (Vulnerability Assessment & Penetration Testing)
-
-Issue filtering & search
-
-Priority and status management
-
-User-scoped access control
-
-🌐 Frontend & UX
-
-Modern, cybersecurity-themed UI
-
-Tailwind CSS for responsive design
-
-SEO-optimized landing page
-
-Smooth scrolling navigation
-
-Auth-aware navigation bar
-
-Dashboard with real data
-
-🧱 Tech Stack
-Frontend
-
-Next.js 15+ (App Router)
-
-TypeScript
-
-Tailwind CSS
-
-Server Components + Client Components
-
-SEO metadata & Open Graph support
-
-Backend
-
-Next.js API Routes
-
-MongoDB + Mongoose
-
-JWT (jsonwebtoken)
-
-Resend Email API
-
-Custom Rate Limiting
-
-Class-based OOP architecture
-
-🌍 Pages
-1️⃣ Landing Page (/)
-
-ApniSec-themed cybersecurity landing page
-
-Hero section with value proposition
-
-Services showcase
-
-SEO-optimized metadata
-
-Navigation bar:
-
-Logo
-
-Services
-
-Why ApniSec
-
-Login / Register
-
-Footer with company details
-
-2️⃣ Login (/login)
-
-Secure login form
-
-Redirects to dashboard on success
-
-3️⃣ Register (/register)
-
-New user registration
-
-Email integration support
-
-4️⃣ Dashboard (/dashboard) (Protected)
-
-Welcome message with user data
-
-Issue management interface
-
-5️⃣ Profile (/profile) (Protected)
-
-View and update user profile
-
-🔌 API Endpoints
-🔐 User APIs
-Method	Endpoint	Description	Auth
-GET	/api/users/profile	Get user profile	✅
-PUT	/api/users/profile	Update user profile	✅
-🛠️ Issue Management APIs
-Method	Endpoint	Description	Auth
-GET	/api/issues	List user issues	✅
-POST	/api/issues	Create issue	✅
-GET	/api/issues/[id]	Get single issue	✅
-PUT	/api/issues/[id]	Update issue	✅
-DELETE	/api/issues/[id]	Delete issue	✅
-
-Query Filtering
-
+## ApniSec — Full-Stack Cybersecurity Platform
+
+ApniSec is a production-ready full-stack cybersecurity service platform built using Next.js (App Router) and TypeScript, designed with enterprise-level security, scalability, and clean architecture principles.
+
+The project demonstrates real-world implementation of custom JWT authentication, rate-limited APIs, OOP-based backend architecture, email integration, and a modern SEO-optimized frontend. It reflects how professional SaaS platforms are structured in large product-based companies.
+
+---
+
+### Key Features
+
+#### Authentication & Security
+- Custom JWT-based authentication with HTTP-only secure cookies
+- Middleware-protected routes for authenticated access
+- Logout with proper cookie invalidation
+- Rate-limited authentication endpoints to prevent abuse
+- Fully typed authentication flow using strict TypeScript
+
+#### Backend Architecture (OOP-Based)
+- Entire backend designed using Object-Oriented Programming principles
+- Clear separation of concerns across Controllers, Services, Models, and Utilities
+- Business logic encapsulated inside service classes
+- Centralized error handling and reusable service layers
+- Strong typing across all layers (no use of `any`)
+
+#### Issue Management System
+- Full CRUD support for cybersecurity issues
+- Supported issue types:
+  - Cloud Security
+  - Red Team Assessment
+  - VAPT (Vulnerability Assessment & Penetration Testing)
+- Advanced filtering, search, priority, and status management
+- User-scoped access control ensuring data isolation
+
+#### Email Integration
+- Integrated Resend Email API for onboarding and notifications
+- Configurable sender identity and branding
+- Production-ready email delivery setup
+
+#### Frontend & UX
+- Modern cybersecurity-themed UI using Tailwind CSS
+- Fully responsive layout
+- SEO-optimized landing page with metadata and Open Graph support
+- Auth-aware navigation and real-time dashboard experience
+
+---
+
+### API Overview
+
+#### User APIs
+| Method | Endpoint              | Description           | Auth |
+|------|----------------------|-----------------------|------|
+| GET  | /api/users/profile   | Fetch user profile    | Yes  |
+| PUT  | /api/users/profile   | Update user profile   | Yes  |
+
+#### Issue Management APIs
+| Method | Endpoint              | Description           | Auth |
+|------|----------------------|-----------------------|------|
+| GET  | /api/issues           | List user issues      | Yes  |
+| POST | /api/issues           | Create new issue      | Yes  |
+| GET  | /api/issues/[id]      | Get issue details     | Yes  |
+| PUT  | /api/issues/[id]      | Update issue          | Yes  |
+| DELETE | /api/issues/[id]    | Delete issue          | Yes  |
+
+Filtering Example:
 GET /api/issues?type=cloud-security
 
-⚙️ Environment Variables
+---
 
-Create a .env.local file:
+### Tech Stack
 
-# Database
-MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/
+**Frontend**
+- Next.js 15+ (App Router)
+- TypeScript
+- Tailwind CSS
+- Server & Client Components
+- SEO metadata & Open Graph
 
-# Authentication
-JWT_SECRET=super-secret-long-random-string
-JWT_EXPIRES_IN=15m
+**Backend**
+- Next.js API Routes
+- MongoDB with Mongoose
+- JWT Authentication
+- Custom Rate Limiting
+- OOP-based architecture
 
-# Email (Resend)
-RESEND_API_KEY=your_resend_api_key
-RESEND_FROM_EMAIL=onboarding@resend.dev
-COMPANY_NAME="ApniSec Platform"
+---
 
-# App
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NODE_ENV=development
+### Production Readiness
+- Environment-based configuration for development and production
+- Secure cookies enabled automatically in HTTPS
+- Optimized for Vercel deployment
+- Clean, maintainable, and scalable codebase
 
-🔑 Production Notes
+---
 
-On Vercel, set environment variables in:
-Project → Settings → Environment Variables
-
-NEXT_PUBLIC_APP_URL should be your deployed domain
-
-secure: true cookies are automatically enabled in production (HTTPS)
-
-▶️ Running Locally
-npm install
-npm run dev
-
-
-App will be available at:
-
-http://localhost:3000
-
-🚢 Deployment (Vercel)
-
-Push repository to GitHub
-
-Import project into Vercel
-
-Add environment variables
-
-Deploy
-
-✔ No server setup required
-✔ Automatic HTTPS
-✔ Optimized Next.js builds
-
-🧪 Code Quality & Best Practices
-
-Strict TypeScript (no any)
-
-OOP-based backend
-
-Reusable service layers
-
-Centralized error handling
-
-Clean, readable, maintainable code
-
-Production-ready security patterns
-
-📌 Assignment Objectives Covered
-
-✅ Full-stack Next.js application
-
-✅ Custom authentication (JWT)
-
-✅ Rate limiting
-
-✅ Email integration
-
-✅ MongoDB with Mongoose
-
-✅ OOP backend architecture
-
-✅ SEO-optimized landing page
-
-✅ Professional UI/UX
-
-✅ Production deployment readiness
-
-👤 Author
-
-Aashish Maurya
+### Author
+Gurudas Maurya  
 Full-Stack Developer | Cybersecurity Enthusiast
-
-If you want, I can also:
-
-Add API documentation (Swagger style)
-
-Create a system design section
-
-Optimize this README for resume / portfolio submissions
-
-Review your repo for final production polish
-
-Just tell me.
