@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { AuthUser } from "./types";
 import { requireEnv } from "./env";
 
-const JWT_SECRET = requireEnv("JWT_SECRET"); // ✅ string (not undefined)
+const JWT_SECRET = requireEnv("JWT_SECRET"); // 
 
 export function signToken(payload: JwtPayload): string {
   return jwt.sign(payload, JWT_SECRET, {
@@ -18,6 +18,6 @@ export function verifyToken(token: string): AuthUser {
     id: decoded.id as string,
     name: decoded.name as string,
     email: decoded.email as string,
-    role: decoded.role as string,
+   
   };
 }

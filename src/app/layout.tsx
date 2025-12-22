@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "ApniSec | Cybersecurity Platform",
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body className="antialiased bg-slate-950 text-slate-200">
         <Navbar />
         {children}
+         <Toaster richColors position="top-right" />
         <Footer />
       </body>
     </html>

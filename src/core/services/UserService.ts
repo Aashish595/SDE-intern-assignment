@@ -1,16 +1,23 @@
 import { UserRepository } from "@/core/repositories/UserRepository";
 
-type UpdateUserData = {
-  name?: string;
-  email?: string;
-};
-
 export class UserService {
-  static getProfile(userId: string) {
-    return UserRepository.findById(userId);
+  static getById(id: string) {
+    return UserRepository.findById(id);
   }
 
-  static updateProfile(userId: string, data: UpdateUserData) {
-    return UserRepository.update(userId, data);
+  static getAll() {
+    return UserRepository.findAll();
+  }
+
+  static update(id: string, data: { name?: string; email?: string; password?: string }) {
+    return UserRepository.update(id, data);
+  }
+
+  static delete(id: string) {
+    return UserRepository.delete(id);
+  }
+
+  static checkEmailExists(email: string, excludeId?: string) {
+    return UserRepository.checkEmailExists(email, excludeId);
   }
 }

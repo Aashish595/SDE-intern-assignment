@@ -1,11 +1,40 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
+import Services from "@/components/home/Services";
 
 export default function LandingPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+ useEffect(() => {
+  checkAuth();
+}, []);
+
+const checkAuth = async () => {
+  try {
+    const res = await api("/api/auth/me");
+    setIsLoggedIn(!!res.user);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
+  if (isLoading) {
+    return (
+      <main className="flex justify-center items-center min-h-screen">
+        <div className="text-slate-400">Loading...</div>
+      </main>
+    );
+  }
+
   return (
     <main className="overflow-hidden">
       {/* HERO */}
-      <section className="relative">
-        {/* subtle cyber glow */}
+      <section id="home" className="relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#1e40af33,transparent_40%)]" />
 
         <div className="relative max-w-7xl mx-auto px-6 py-32 text-center">
@@ -26,57 +55,41 @@ export default function LandingPage() {
           </p>
 
           <div className="mt-10 flex justify-center gap-4">
-            <Link
-              href="/register"
-              className="px-8 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition"
-            >
-              Get Started
-            </Link>
+            {isLoggedIn ? (
+              // User is logged in - show dashboard button
+              <Link
+                href="/dashboard"
+                className="px-8 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              // User is not logged in - show register/login buttons
+              <>
+                <Link
+                  href="/register"
+                  className="px-8 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition"
+                >
+                  Get Started
+                </Link>
 
-            <Link
-              href="/login"
-              className="px-8 py-3 rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-900 transition"
-            >
-              Access Dashboard
-            </Link>
+                <Link
+                  href="/login"
+                  className="px-8 py-3 rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-900 transition"
+                >
+                  Access Dashboard
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <h2 className="text-3xl font-bold text-center">
-          Security Services We Offer
-        </h2>
-
-        <div className="mt-16 grid md:grid-cols-3 gap-8">
-          {[
-            {
-              title: "Cloud Security",
-              desc: "Protect cloud infrastructure from misconfigurations and threats.",
-            },
-            {
-              title: "Red Team Assessment",
-              desc: "Simulated attacks to test real-world detection and response.",
-            },
-            {
-              title: "VAPT",
-              desc: "Identify and remediate vulnerabilities proactively.",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="bg-slate-900/60 backdrop-blur border border-slate-800 rounded-xl p-8 hover:border-indigo-500 transition"
-            >
-              <h3 className="text-xl font-semibold">{item.title}</h3>
-              <p className="mt-3 text-slate-400">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* SERVICES SECTION - IMPORTED COMPONENT */}
+      <Services />
 
       {/* WHY APNISEC */}
-      <section className="bg-slate-950 py-24">
+      <section id="why-apnisec" className="bg-slate-950 py-24">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center">
             Why Organizations Choose ApniSec
@@ -110,7 +123,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative py-28">
+      <section id="cta" className="relative py-28">
         <div className="absolute inset-0 bg-linear-to-r from-indigo-600/10 to-cyan-500/10" />
         <div className="relative text-center max-w-3xl mx-auto px-6">
           <h2 className="text-4xl font-bold">
@@ -120,12 +133,23 @@ export default function LandingPage() {
             Start securing your organization with ApniSec today.
           </p>
 
-          <Link
-            href="/contact"
-            className="inline-block mt-8 px-10 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition"
-          >
-            Talk to Security Experts
-          </Link>
+          <div className="mt-8">
+            {isLoggedIn ? (
+              <Link
+                href="/dashboard"
+                className="inline-block px-10 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <Link
+                href="/contact"
+                className="inline-block px-10 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition"
+              >
+                Talk to Security Experts
+              </Link>
+            )}
+          </div>
         </div>
       </section>
     </main>

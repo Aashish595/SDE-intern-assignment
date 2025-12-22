@@ -1,12 +1,18 @@
-import { requireAuth } from "@/lib/auth";
-import User from "@/models/User";
-import { connectDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/lib/jwt";
 
 export async function GET() {
-  await connectDB();
-  const auth = requireAuth();
+  const token = (await cookies()).get("token")?.value;
 
-  const user = await User.findById(auth.id).select("-password");
-  return NextResponse.json(user);
+  if (!token) {
+    return NextResponse.json({ user: null });
+  }
+
+  try {
+    const user = verifyToken(token);
+    return NextResponse.json({ user });
+  } catch {
+    return NextResponse.json({ user: null });
+  }
 }

@@ -11,9 +11,10 @@ export async function api(
     },
   });
 
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || err.message || "Something went wrong");
+if (!res.ok) {
+    const text = await res.text();
+    console.error("API ERROR:", res.status, text);
+    throw new Error(text || "API request failed");
   }
 
   return res.json();

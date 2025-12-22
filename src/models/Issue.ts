@@ -10,8 +10,18 @@ const IssueSchema = new Schema(
     },
     title: { type: String, required: true },
     description: { type: String, required: true },
-    priority: { type: String, default: "Medium" },
-    status: { type: String, default: "Open" },
+    priority: {
+      type: String,
+      enum: ["Low", "Medium", "High"],
+      default: "Medium",
+    },
+
+    status: {
+  type: String,
+  enum: ["Open", "In Progress", "Resolved"],
+  default: "Open",
+}
+
   },
   { timestamps: true }
 );

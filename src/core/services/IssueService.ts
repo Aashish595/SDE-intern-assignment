@@ -1,5 +1,5 @@
 import { IssueRepository, type IssueType } from "@/core/repositories/IssueRepository";
-import { sendEmail } from "@/lib/email";
+import { EmailService } from "@/core/services/EmailService";
 
 export class IssueService {
   static getAll(userId: string, type?: IssueType) {
@@ -23,11 +23,15 @@ export class IssueService {
       ...data,
     });
 
-    await sendEmail(
-      "admin@apnisec.com",
-      "New Security Issue",
-      `<h3>${issue.title}</h3><p>${issue.description}</p>`
-    );
+    // Send issue notification email (async, non-blocking)
+    EmailService.sendIssueNotification(
+      issue.type,
+      issue.title,
+      issue.description,
+      "System",
+      issue._id.toString(),
+      ["admin@apnisec.com"]
+    ).catch(console.error);
 
     return issue;
   }
