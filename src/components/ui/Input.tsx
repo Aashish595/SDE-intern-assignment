@@ -1,6 +1,4 @@
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-export default function Input(props: Props) {
+export default function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}

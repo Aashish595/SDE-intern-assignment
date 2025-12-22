@@ -52,6 +52,15 @@ The project demonstrates real-world implementation of custom JWT authentication,
 | GET  | /api/users/profile   | Fetch user profile    | Yes  |
 | PUT  | /api/users/profile   | Update user profile   | Yes  |
 
+#### Auth APIs
+| Method | Endpoint               | Description           | Auth |
+|------|--------------------------|-----------------------|------|
+| GET  | /api/users/login         | login                 | Yes  |
+| PUT  | /api/users/logout        | Logout                | Yes  |
+| PUT  | /api/users/register      | New user              | Yes  |
+| PUT  | /api/users/reset-password| reset the password    | Yes  |
+| PUT  | /api/users/me            | check auth            | Yes  |
+
 #### Issue Management APIs
 | Method | Endpoint              | Description           | Auth |
 |------|----------------------|-----------------------|------|

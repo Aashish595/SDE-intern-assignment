@@ -13,7 +13,10 @@ export class UserController {
     return NextResponse.json(user);
   }
 
-  static async updateProfile(userId: string, data: Partial<{ name: string; email: string }>) {
+  static async updateProfile(
+    userId: string,
+    data: Partial<{ name: string; email: string }>
+  ) {
     if (!userId) throw new ApiError("Unauthorized", 401);
 
     const user = await UserService.getById(userId);
@@ -26,9 +29,9 @@ export class UserController {
 
     const updated = await UserService.update(userId, data);
 
-    await EmailService.sendProfileUpdated(
-      updated.email,
+    await EmailService.sendProfileUpdatedNotification(
       updated.name,
+      updated.email,
       Object.keys(data)
     );
 
@@ -47,4 +50,3 @@ export class UserController {
     return NextResponse.json({ message: "User deleted" });
   }
 }
- 
