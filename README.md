@@ -43,6 +43,8 @@ The project demonstrates real-world implementation of custom JWT authentication,
 - SEO-optimized landing page with metadata and Open Graph support
 - Auth-aware navigation and real-time dashboard experience
 
+##Note - users may need to check spam folder
+
 ---
 
 ### API Overview
