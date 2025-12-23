@@ -17,7 +17,6 @@ export default function DashboardClient({ user }: { user: User }) {
 
   const [showForm, setShowForm] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
-
   return (
     <main className="max-w-6xl mx-auto p-8">
       {/* Header */}

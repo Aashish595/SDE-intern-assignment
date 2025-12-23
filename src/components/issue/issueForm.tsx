@@ -53,6 +53,7 @@ export default function IssueForm({ onClose, onCreated }: Props) {
 
       toast.success("Issue created successfully");
       onCreated();
+      onClose();
     } catch (err: unknown) {
       toast.error(
         err instanceof Error ? err.message : "Failed to create issue"
@@ -61,6 +62,7 @@ export default function IssueForm({ onClose, onCreated }: Props) {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
