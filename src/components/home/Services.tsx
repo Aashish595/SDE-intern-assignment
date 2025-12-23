@@ -80,7 +80,7 @@ const services = [
 ];
 
 export default function Services() {
-  const [activeService] = useState(services[0]);
+  const [activeService, setActiveService] = useState(services[0]);
 
   const scrollToServices = () => {
     const element = document.getElementById("services");
@@ -119,11 +119,18 @@ export default function Services() {
           <div className="space-y-4">
             {services.map((service) => (
               <motion.div
-                key={service.id} 
+                key={service.id}
+                onClick={() => setActiveService(service)} // ✅ IMPORTANT
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
-                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-8"
+                className={`cursor-pointer bg-slate-900/50 backdrop-blur-sm border 
+      ${
+        activeService.id === service.id
+          ? "border-indigo-500"
+          : "border-slate-800"
+      }
+      rounded-2xl p-8`}
               >
                 <div className="flex items-center gap-4">
                   <div className="text-2xl">{service.icon}</div>
