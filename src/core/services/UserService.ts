@@ -5,9 +5,6 @@ export class UserService {
     return UserRepository.findById(id);
   }
 
-  static getAll() {
-    return UserRepository.findAll();
-  }
 
   static update(id: string, data: { name?: string; email?: string; password?: string }) {
     return UserRepository.update(id, data);

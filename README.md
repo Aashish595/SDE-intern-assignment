@@ -32,9 +32,10 @@ The project demonstrates real-world implementation of custom JWT authentication,
 - User-scoped access control ensuring data isolation
 
 #### Email Integration
-- Integrated Resend Email API for onboarding and notifications
-- Configurable sender identity and branding
-- Production-ready email delivery setup
+- Automated welcome email on user registration and on profile updation
+- Issue creation notification emails including issue type, title, and description
+- Password reset email support using secure, time-bound tokens
+- Reusable HTML-based email templates with configurable sender identity and branding
 
 #### Frontend & UX
 - Modern cybersecurity-themed UI using Tailwind CSS

@@ -30,9 +30,9 @@ export default function AuthForm({ type }: { type: "login" | "register" }) {
 
       router.replace("/dashboard");
       router.refresh();
-    } catch (err) {
-      alert("Authentication failed");
-      console.error(err);
+    } catch (err:unknown) {
+      alert((err as Error).message || "Authentication failed");
+      console.error((err as Error).message);
     } finally {
       setLoading(false);
     }

@@ -67,36 +67,44 @@ export class IssueController {
     }, { status: 201 });
   }
 
-  static async update(req: Request, id: string) {
-    if (!id) {
-      throw new ApiError("Issue ID is required", 400);
-    }
+static async update(req: Request, id: string) {
+  const body = await req.json();
+  const issue = await IssueService.update(id, body);
 
-    IssueValidator.id(id);
+  await EmailService.sendIssueNotification(
+    issue.type,
+    issue.title,
+    issue.description,
+    "System",
+    issue._id.toString(),
+    ["admin@example.com"]
+  );
 
-    const body = await req.json();
-    IssueValidator.update(body);
+  return NextResponse.json({
+    message: "Issue updated successfully",
+    issue,
+  });
+}
 
-    const issue = await IssueService.update(id, body);
-    
-    return NextResponse.json({
-      message: "Issue updated successfully",
-      issue
-    });
-  }
 
-  static async delete(id: string) {
-    if (!id) {
-      throw new ApiError("Issue ID is required", 400);
-    }
+static async delete(id: string) {
+  const issue = await IssueService.getById(id);
+  await IssueService.delete(id);
 
-    IssueValidator.id(id);
+  await EmailService.sendIssueNotification(
+    issue.type,
+    issue.title,
+    issue.description,
+    "System",
+    issue._id.toString(),
+    ["admin@example.com"]
+  );
 
-    await IssueService.delete(id);
-    return NextResponse.json({ 
-      message: "Issue deleted successfully" 
-    });
-  }
+  return NextResponse.json({
+    message: "Issue deleted successfully",
+  });
+}
+
 
   private static async sendIssueNotificationEmails(
     issue: Issue, 

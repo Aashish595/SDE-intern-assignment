@@ -13,37 +13,54 @@ export class UserController {
     return NextResponse.json(user);
   }
 
-  static async updateProfile(
-    userId: string,
-    data: Partial<{ name: string; email: string }>
-  ) {
-    if (!userId) throw new ApiError("Unauthorized", 401);
+static async updateProfile(
+  userId: string,
+  data: Partial<{ name: string; email: string }>
+) {
+  if (!userId) throw new ApiError("Unauthorized", 401);
 
-    const user = await UserService.getById(userId);
-    if (!user) throw new ApiError("User not found", 404);
+  const user = await UserService.getById(userId);
+  if (!user) throw new ApiError("User not found", 404);
 
-    if (data.email && data.email !== user.email) {
-      const exists = await UserService.checkEmailExists(data.email, userId);
-      if (exists) throw new ApiError("Email already in use", 409);
-    }
+  // Track actual changes
+  const changes: string[] = [];
+  const updateData: Partial<{ name: string; email: string }> = {};
 
-    const updated = await UserService.update(userId, data);
+  if (data.name && data.name !== user.name) {
+    updateData.name = data.name;
+    changes.push("name");
+  }
 
-    await EmailService.sendProfileUpdatedNotification(
-      updated.name,
-      updated.email,
-      Object.keys(data)
-    );
+  if (data.email && data.email !== user.email) {
+    const exists = await UserService.checkEmailExists(data.email, userId);
+    if (exists) throw new ApiError("Email already in use", 409);
 
+    updateData.email = data.email;
+    changes.push("email");
+  }
+
+  // If nothing changed, avoid DB + email
+  if (changes.length === 0) {
     return NextResponse.json({
-      message: "Profile updated",
-      user: updated,
+      message: "No changes detected",
+      user,
     });
   }
 
-  static async getAllUsers() {
-    return NextResponse.json(await UserService.getAll());
-  }
+  const updated = await UserService.update(userId, updateData);
+
+  // Send email only when real change happened
+  await EmailService.sendProfileUpdatedNotification(
+    updated.name,
+    updated.email,
+    changes
+  );
+
+  return NextResponse.json({
+    message: "Profile updated successfully",
+    user: updated,
+  });
+}
 
   static async deleteUser(userId: string) {
     await UserService.delete(userId);

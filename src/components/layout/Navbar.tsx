@@ -16,31 +16,35 @@ export default function Navbar() {
   const isHomePage = pathname === "/";
 
   // Fetch current user
-  const checkAuth = async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch("/api/auth/me", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data);
-      } else {
-        setUser(null);
-      }
-    } catch {
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const checkAuth = async (): Promise<void> => {
+  setIsLoading(true);
+  try {
+    const res = await fetch("/api/auth/me", {
+      credentials: "include",
+      cache: "no-store",
+    });
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+    const data = await res.json();
+    setUser(data.user ?? null);
+  } catch {
+    setUser(null);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
+
+useEffect(() => {
+  checkAuth();
+}, [pathname]);
+
 
   // Logout handler
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
     setUser(null);
+    router.refresh();
     router.push("/");
   };
 

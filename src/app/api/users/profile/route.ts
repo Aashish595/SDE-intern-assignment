@@ -1,3 +1,4 @@
+// src/app/api/users/profile/route.ts
 import { NextRequest } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { UserController } from "@/core/controllers/UserController";

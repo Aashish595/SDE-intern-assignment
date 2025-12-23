@@ -99,9 +99,7 @@ export default function ProfileForm({ user }: Props) {
 
         {/* NAME */}
         <div className="mb-6">
-          <label className="text-slate-400 text-sm mb-2 block">
-            Full Name
-          </label>
+          <label className="text-slate-400 text-sm mb-2 block">Full Name</label>
 
           <div className="relative">
             <User className="absolute left-3 top-3.5 h-5 w-5 text-slate-500" />
@@ -145,9 +143,7 @@ export default function ProfileForm({ user }: Props) {
 
         {/* ROLE */}
         <div className="mb-8">
-          <label className="text-slate-400 text-sm mb-2 block">
-            Role
-          </label>
+          <label className="text-slate-400 text-sm mb-2 block">Role</label>
 
           <div className="relative">
             <Shield className="absolute left-3 top-3.5 h-5 w-5 text-slate-500" />
@@ -163,6 +159,15 @@ export default function ProfileForm({ user }: Props) {
             />
           </div>
         </div>
+
+        {/* LINK TO CHANGE PASSWORD */}
+        <a
+          href="/login"
+          className="text-sm text-indigo-400 hover:underline mt-4 block"
+        >
+          Want to change your password? Use “Forgot password” on login.
+        </a>
+
 
         {/* ACTIONS */}
         {isEditing && (

@@ -21,7 +21,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAuth();
+    const user = await requireAuth();
     await connectDB();
     
     const { id } = await params;
@@ -72,9 +72,9 @@ export async function PATCH(
     }
 
     const issue = await Issue.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true }
+     { _id: id, userId: user.id }, 
+    updateData,
+    { new: true }
     );
 
     if (!issue) {
@@ -99,7 +99,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAuth();
+    const user = await requireAuth();
     await connectDB();
     
     const { id } = await params;
@@ -111,7 +111,7 @@ export async function DELETE(
       );
     }
 
-    const issue = await Issue.findByIdAndDelete(id);
+    const issue = await Issue.findByIdAndDelete({ _id: id, userId: user.id });
 
     if (!issue) {
       return NextResponse.json(

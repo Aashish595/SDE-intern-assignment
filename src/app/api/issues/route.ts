@@ -4,7 +4,7 @@ import Issue from "@/models/Issue";
 import { requireAuth } from "@/lib/auth";
 
 export async function GET(req: Request) {
-  await requireAuth();
+  const user = await requireAuth(); // 🔐 capture user
   await connectDB();
 
   const { searchParams } = new URL(req.url);
@@ -14,8 +14,9 @@ export async function GET(req: Request) {
   const priority = searchParams.get("priority");
   const status = searchParams.get("status");
 
-  // 🔍 Dynamic filter
-  const filter: Record<string, unknown> = {};
+  const filter: Record<string, unknown> = {
+    userId: user.id, // 🔐 ISOLATION
+  };
 
   if (type) filter.type = type;
   if (priority) filter.priority = priority;
@@ -32,6 +33,7 @@ export async function GET(req: Request) {
 
   return NextResponse.json(issues);
 }
+
 
 export async function POST(req: Request) {
   const user = await requireAuth();
